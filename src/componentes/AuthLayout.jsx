@@ -16,7 +16,7 @@ export default function AuthLayout({ subtitulo, children }) {
         <section className="flex-1 px-8 z-10">{children}</section>
 
         <footer className="py-10 px-8 text-center z-10">
-          <p className="text-slate-400 text-xs">© 2024 ClinicaDental. Todos los derechos reservados.</p>
+          <p className="text-slate-400 text-xs">© 2026 Odonty. Todos los derechos reservados.</p>
         </footer>
       </div>
     </main>

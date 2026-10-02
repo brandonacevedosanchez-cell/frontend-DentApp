@@ -8,7 +8,7 @@ export default function LandingView() {
           <div className="flex size-16 items-center justify-center rounded-2xl bg-white shadow-xl shadow-primary/5 mb-6">
             <span className="material-symbols-outlined text-primary text-4xl">dentistry</span>
           </div>
-          <h2 className="text-primary text-xl font-bold tracking-tight">odonty</h2>
+          <h2 className="text-primary text-xl font-bold tracking-tight">Odonty</h2>
         </header>
 
         <section className="flex-1 flex flex-col px-8 text-center justify-center">
@@ -40,7 +40,7 @@ export default function LandingView() {
             <span className="material-symbols-outlined text-sm">mail</span>
             <span className="text-xs">contacto@clinicadental.com</span>
           </div>
-          <p className="text-slate-400 text-xs font-medium">© 2024 ClinicaDental. Todos los derechos reservados.</p>
+          <p className="text-slate-400 text-xs font-medium">© 2026 Odonty. Todos los derechos reservados.</p>
         </footer>
       </div>
     </main>
