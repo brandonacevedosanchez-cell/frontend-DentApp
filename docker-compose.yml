@@ -1,0 +1,11 @@
+services:
+  front:
+    build:
+      context: .
+      args:
+        # URL del backend. Se incrusta al compilar.
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000}
+    container_name: clinicadental_front
+    ports:
+      - "8080:80"
+    restart: unless-stopped
