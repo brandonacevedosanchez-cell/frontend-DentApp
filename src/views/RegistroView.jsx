@@ -73,26 +73,26 @@ export default function RegistroView() {
   }
 
   return (
-    <AuthLayout subtitulo="Cree su cuenta">
-      <form onSubmit={handleSubmit} noValidate className="space-y-5">
+    <AuthLayout subtitulo="Cree su cuenta" amplio>
+      <form onSubmit={handleSubmit} noValidate className="grid grid-cols-1 gap-x-6 gap-y-5 md:grid-cols-2">
         <Campo id="nombre" label="Nombre completo" autoComplete="name" placeholder="Nombre Apellido" value={form.nombre} onChange={cambiar('nombre')} error={errores.nombre} />
         <Campo id="documento" label="Número de documento" placeholder="1234567890" value={form.documento} onChange={cambiar('documento')} error={errores.documento} />
         <Campo id="telefono" label="Teléfono" type="tel" autoComplete="tel" inputMode="tel" placeholder="3001234567" value={form.telefono} onChange={cambiar('telefono')} error={errores.telefono} />
         <Campo id="email" label="Correo electrónico" type="email" autoComplete="email" placeholder="nombre@ejemplo.com" value={form.email} onChange={cambiar('email')} error={errores.email} />
-        <Campo id="password" label="Contraseña" type="password" autoComplete="new-password" placeholder="Mín. 8 con mayúscula, número y símbolo" value={form.password} onChange={cambiar('password')} error={errores.password} />
-        <Campo id="confirmar" label="Confirmar contraseña" type="password" autoComplete="new-password" placeholder="Repita la contraseña" value={form.confirmar} onChange={cambiar('confirmar')} error={errores.confirmar} />
+        <Campo id="password" label="Contraseña" type="password" mostrarContrasena autoComplete="new-password" placeholder="Mín. 8 con mayúscula, número y símbolo" value={form.password} onChange={cambiar('password')} error={errores.password} />
+        <Campo id="confirmar" label="Confirmar contraseña" type="password" mostrarContrasena autoComplete="new-password" placeholder="Repita la contraseña" value={form.confirmar} onChange={cambiar('confirmar')} error={errores.confirmar} />
 
         {errorServidor && (
-          <p role="alert" className="text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">{errorServidor}</p>
+          <p role="alert" className="md:col-span-2 text-red-600 text-sm bg-red-50 border border-red-200 rounded-lg px-4 py-3">{errorServidor}</p>
         )}
 
-        <div className="pt-4">
-          <button type="submit" disabled={cargando} className="w-full h-14 btn-gradient text-white font-bold rounded-lg ios-shadow active:scale-[0.98] transition-transform text-lg disabled:opacity-70 disabled:cursor-not-allowed">
+        <div className="pt-2 md:col-span-2 md:flex md:justify-center md:pt-3">
+          <button type="submit" disabled={cargando} className="w-full h-12 btn-gradient text-white font-semibold rounded-lg ios-shadow transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed md:w-72">
             {cargando ? 'Creando cuenta...' : 'Crear cuenta'}
           </button>
         </div>
 
-        <p className="text-center text-sm text-slate-500 pt-2">
+        <p className="text-center text-sm text-slate-500 pt-1 md:col-span-2">
           ¿Ya tiene cuenta?{' '}
           <Link to="/login" className="text-primary font-semibold hover:underline">Iniciar sesión</Link>
         </p>

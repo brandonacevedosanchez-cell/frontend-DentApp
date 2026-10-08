@@ -6,7 +6,7 @@ import { login, mensajeError, verificarMfa } from '../service/authService'
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const claseInput =
-  'w-full h-14 bg-slate-50 border rounded-lg px-4 text-slate-900 placeholder:text-slate-400 focus:ring-1 focus:ring-primary focus:border-primary transition-all outline-none'
+  'w-full h-14 bg-slate-50 border rounded-lg px-4 text-slate-900 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary transition-all outline-none'
 
 export default function LoginForm() {
   const navigate = useNavigate()
@@ -100,7 +100,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={cargando}
-            className="w-full h-14 btn-gradient text-white font-bold rounded-lg ios-shadow active:scale-[0.98] transition-transform text-lg disabled:opacity-70 disabled:cursor-not-allowed"
+            className="w-full h-12 btn-gradient text-white font-semibold rounded-lg ios-shadow transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {cargando ? 'Verificando...' : 'Verificar'}
           </button>
@@ -150,7 +150,7 @@ export default function LoginForm() {
             type="button"
             onClick={() => setVerPassword((v) => !v)}
             aria-label={verPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-            className="absolute right-4 text-slate-400 hover:text-primary transition-colors"
+            className="absolute right-1 inline-flex size-10 items-center justify-center rounded-md text-slate-500 hover:text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <span className="material-symbols-outlined">{verPassword ? 'visibility_off' : 'visibility'}</span>
           </button>
@@ -174,7 +174,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={cargando}
-          className="w-full h-14 btn-gradient text-white font-bold rounded-lg ios-shadow active:scale-[0.98] transition-transform text-lg disabled:opacity-70 disabled:cursor-not-allowed"
+          className="w-full h-12 btn-gradient text-white font-semibold rounded-lg ios-shadow transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {cargando ? 'Ingresando...' : 'Ingresar'}
         </button>
