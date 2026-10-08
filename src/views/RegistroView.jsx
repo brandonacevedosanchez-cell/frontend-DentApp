@@ -34,6 +34,10 @@ export default function RegistroView() {
   const [cargando, setCargando] = useState(false)
 
   const cambiar = (campo) => (e) => setForm({ ...form, [campo]: e.target.value })
+  const cambiarTelefono = (e) => {
+    const telefono = e.target.value.replace(/[^0-9]/g, '').slice(0, 10)
+    setForm({ ...form, telefono })
+  }
 
   const validar = () => {
     const n = {}
@@ -77,7 +81,7 @@ export default function RegistroView() {
       <form onSubmit={handleSubmit} noValidate className="grid grid-cols-1 gap-x-6 gap-y-5 md:grid-cols-2">
         <Campo id="nombre" label="Nombre completo" autoComplete="name" placeholder="Nombre Apellido" value={form.nombre} onChange={cambiar('nombre')} error={errores.nombre} />
         <Campo id="documento" label="Número de documento" placeholder="1234567890" value={form.documento} onChange={cambiar('documento')} error={errores.documento} />
-        <Campo id="telefono" label="Teléfono" type="tel" autoComplete="tel" inputMode="tel" placeholder="3001234567" value={form.telefono} onChange={cambiar('telefono')} error={errores.telefono} />
+        <Campo id="telefono" label="Teléfono" type="tel" autoComplete="tel" inputMode="numeric" placeholder="3001234567" value={form.telefono} onChange={cambiarTelefono} error={errores.telefono} />
         <Campo id="email" label="Correo electrónico" type="email" autoComplete="email" placeholder="nombre@ejemplo.com" value={form.email} onChange={cambiar('email')} error={errores.email} />
         <Campo id="password" label="Contraseña" type="password" mostrarContrasena autoComplete="new-password" placeholder="Mín. 8 con mayúscula, número y símbolo" value={form.password} onChange={cambiar('password')} error={errores.password} />
         <Campo id="confirmar" label="Confirmar contraseña" type="password" mostrarContrasena autoComplete="new-password" placeholder="Repita la contraseña" value={form.confirmar} onChange={cambiar('confirmar')} error={errores.confirmar} />
