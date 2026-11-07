@@ -4,9 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        primary: '#003a5c',
-        mint: '#4CAF7C',
-        'background-light': '#f5f7f8',
+        primary: '#1E40AF',
+        'background-light': '#F3F7FF',
         'neutral-border': '#E0E0E0',
       },
       fontFamily: { display: ['Inter', 'sans-serif'] },

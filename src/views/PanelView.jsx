@@ -13,7 +13,11 @@ export default function PanelView() {
 
   return (
     <main className="min-h-screen bg-background-light flex flex-col items-center justify-center gap-4 p-8 text-center">
-      <h1 className="text-primary text-2xl font-bold">Sesión iniciada</h1>
+      <section className="gradient-primary w-full max-w-xl rounded-2xl p-8 text-left text-white shadow-lg">
+        <h1 className="text-2xl font-bold">
+          Hola, {usuario?.full_name?.trim().split(/\s+/)[0] || 'Usuario'}
+        </h1>
+      </section>
       <div className="text-slate-500">
         <p className="font-semibold text-slate-700">{usuario?.full_name}</p>
         <p>{usuario?.email}</p>

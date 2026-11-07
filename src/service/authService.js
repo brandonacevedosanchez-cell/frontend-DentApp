@@ -55,7 +55,7 @@ api.interceptors.request.use((config) => {
 // 2) Si el access token venció (dura 15 min), pide uno nuevo con el refresh token y reintenta
 const RUTAS_PUBLICAS = [
   '/auth/login',
-  '/auth/register',
+  '/clinics/register',
   '/auth/refresh',
   '/auth/logout',
   '/auth/forgot-password',
@@ -107,10 +107,20 @@ api.interceptors.response.use(
 
 // Guarda los tokens y consulta /auth/me para tener los datos del usuario
 async function completarLogin(tokens) {
-  guardarSesion({ access_token: tokens.access_token, refresh_token: tokens.refresh_token })
+  guardarSesion({
+    access_token: tokens.access_token,
+    refresh_token: tokens.refresh_token,
+    must_change_password: Boolean(tokens.must_change_password),
+  })
   try {
     const { data: usuario } = await api.get('/auth/me')
-    guardarSesion({ ...obtenerSesion(), usuario })
+    const debeCambiarClave = Boolean(tokens.must_change_password || usuario.must_change_password)
+    guardarSesion({
+      ...obtenerSesion(),
+      usuario,
+      must_change_password: debeCambiarClave,
+    })
+    return { mustChangePassword: debeCambiarClave }
   } catch (err) {
     cerrarSesion()
     throw err
@@ -122,25 +132,37 @@ async function completarLogin(tokens) {
 export async function login({ email, password }) {
   const { data } = await api.post('/auth/login', { email, password })
   if (data.mfa_required) return { mfaRequired: true, mfaToken: data.mfa_token }
-  await completarLogin(data)
-  return { mfaRequired: false }
+  const { mustChangePassword } = await completarLogin(data)
+  return { mfaRequired: false, mustChangePassword }
 }
 
 // POST /auth/mfa/verify  (segundo paso del login cuando hay MFA)
 export async function verificarMfa({ mfaToken, codigo }) {
   const { data } = await api.post('/auth/mfa/verify', { mfa_token: mfaToken, code: codigo })
-  await completarLogin(data)
+  return completarLogin(data)
 }
 
-// POST /auth/register
-export async function registrar({ nombre, documento, telefono, email, password }) {
-  const { data } = await api.post('/auth/register', {
-    email,
-    document_number: documento,
-    full_name: nombre,
-    phone_number: telefono,
-    password,
+// POST /auth/change-password
+export async function cambiarPassword({ currentPassword, newPassword }) {
+  await api.post('/auth/change-password', {
+    current_password: currentPassword,
+    new_password: newPassword,
   })
+  const sesion = obtenerSesion()
+  if (sesion) {
+    guardarSesion({
+      ...sesion,
+      must_change_password: false,
+      usuario: sesion.usuario ? { ...sesion.usuario, must_change_password: false } : sesion.usuario,
+    })
+  }
+}
+
+// POST /clinics/register (multipart/form-data)
+export async function registrarClinica(datos) {
+  const formData = new FormData()
+  Object.entries(datos).forEach(([campo, valor]) => formData.append(campo, valor))
+  const { data } = await api.post('/clinics/register', formData)
   return data
 }
 

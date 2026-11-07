@@ -6,7 +6,7 @@ import { login, mensajeError, verificarMfa } from '../service/authService'
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const claseInput =
-  'w-full h-14 bg-slate-50 border rounded-lg px-4 text-slate-900 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary transition-all outline-none'
+  'w-full h-14 bg-slate-50 border rounded-lg px-4 text-base text-slate-900 placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-primary transition-all outline-none'
 
 export default function LoginForm() {
   const navigate = useNavigate()
@@ -43,7 +43,7 @@ export default function LoginForm() {
         setMfaToken(res.mfaToken)
         return
       }
-      navigate('/panel')
+      navigate(res.mustChangePassword ? '/cambiar-clave' : '/panel', { replace: true })
     } catch (err) {
       setErrorServidor(mensajeError(err, 'No se pudo iniciar sesión. Revise sus datos e intente de nuevo.'))
     } finally {
@@ -60,8 +60,8 @@ export default function LoginForm() {
     }
     setCargando(true)
     try {
-      await verificarMfa({ mfaToken, codigo })
-      navigate('/panel')
+      const res = await verificarMfa({ mfaToken, codigo })
+      navigate(res.mustChangePassword ? '/cambiar-clave' : '/panel', { replace: true })
     } catch (err) {
       setErrorServidor(mensajeError(err, 'Código inválido. Intente de nuevo.'))
     } finally {
@@ -100,7 +100,7 @@ export default function LoginForm() {
           <button
             type="submit"
             disabled={cargando}
-            className="w-full h-12 btn-gradient text-white font-semibold rounded-lg ios-shadow transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
+            className="form-submit w-full h-12 btn-gradient text-white font-semibold rounded-lg ios-shadow transition-[filter,transform] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
           >
             {cargando ? 'Verificando...' : 'Verificar'}
           </button>
@@ -124,6 +124,7 @@ export default function LoginForm() {
           id="email"
           type="email"
           autoComplete="email"
+          inputMode="email"
           placeholder="nombre@ejemplo.com"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -150,7 +151,7 @@ export default function LoginForm() {
             type="button"
             onClick={() => setVerPassword((v) => !v)}
             aria-label={verPassword ? 'Ocultar contraseña' : 'Mostrar contraseña'}
-            className="absolute right-1 inline-flex size-10 items-center justify-center rounded-md text-slate-500 hover:text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+            className="password-toggle absolute right-1 inline-flex items-center justify-center rounded-md text-slate-500 hover:text-primary hover:bg-primary/5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
           >
             <span className="material-symbols-outlined">{verPassword ? 'visibility_off' : 'visibility'}</span>
           </button>
@@ -159,7 +160,7 @@ export default function LoginForm() {
       </div>
 
       {mensaje && (
-        <p role="status" className="text-green-700 text-sm bg-green-50 border border-green-200 rounded-lg px-4 py-3">
+        <p role="status" className="text-primary text-sm bg-primary/5 border border-primary/20 rounded-lg px-4 py-3">
           {mensaje}
         </p>
       )}
@@ -174,7 +175,7 @@ export default function LoginForm() {
         <button
           type="submit"
           disabled={cargando}
-          className="w-full h-12 btn-gradient text-white font-semibold rounded-lg ios-shadow transition-colors hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
+          className="form-submit w-full h-12 btn-gradient text-white font-semibold rounded-lg ios-shadow transition-[filter,transform] hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 active:scale-[0.99] disabled:opacity-70 disabled:cursor-not-allowed"
         >
           {cargando ? 'Ingresando...' : 'Ingresar'}
         </button>
@@ -190,7 +191,7 @@ export default function LoginForm() {
           <div className="h-px w-12 bg-neutral-border" />
         </div>
         <Link to="/registro" className="text-primary text-sm font-semibold hover:underline">
-          Crear cuenta
+          Solicitar acceso
         </Link>
       </div>
     </form>

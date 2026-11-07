@@ -2,9 +2,25 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --gradient-primary: linear-gradient(135deg, #1E40AF 0%, #2563EB 100%);
+}
+
 body {
   font-family: 'Inter', sans-serif;
   margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+img,
+svg {
+  max-width: 100%;
 }
 
 .ios-shadow {
@@ -12,9 +28,225 @@ body {
 }
 
 .gradient-bg {
-  background: linear-gradient(180deg, rgba(0, 58, 92, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(180deg, rgba(37, 99, 235, 0.08) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+.gradient-primary {
+  background: var(--gradient-primary);
 }
 
 .btn-gradient {
-  background: linear-gradient(135deg, #003a5c 0%, #4CAF7C 100%);
+  background: var(--gradient-primary);
+}
+
+.auth-page,
+.landing-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+  box-sizing: border-box;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  padding: 1rem;
+  overflow-x: hidden;
+}
+
+.auth-card,
+.landing-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  margin-block: auto;
+  overflow: clip;
+  border: 1px solid rgba(30, 64, 175, 0.08);
+  border-radius: 1rem;
+  background: #fff;
+}
+
+.auth-card {
+  max-width: 27.5rem;
+}
+
+.auth-card--wide {
+  max-width: 45rem;
+}
+
+.landing-card {
+  max-width: 28rem;
+}
+
+.auth-header {
+  position: relative;
+  z-index: 1;
+  padding: clamp(1.5rem, 5vw, 3.5rem) clamp(1rem, 5vw, 2rem) clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.auth-content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  min-width: 0;
+  padding-inline: clamp(1rem, 5vw, 2rem);
+}
+
+.auth-footer {
+  position: relative;
+  z-index: 1;
+  padding: 2rem clamp(1rem, 5vw, 2rem);
+  text-align: center;
+}
+
+.landing-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(1.5rem, 5vw, 3rem) 1.5rem 1rem;
+}
+
+.landing-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+  padding: 1rem clamp(1rem, 6vw, 2rem);
+  text-align: center;
+}
+
+.landing-footer {
+  padding: 1rem clamp(1rem, 5vw, 2rem) 2rem;
+  text-align: center;
+}
+
+.registration-form,
+.registration-grid {
+  min-width: 0;
+}
+
+.registration-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+  border: 0;
+  padding: 0;
+}
+
+.registration-grid legend {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 0;
+  margin-bottom: 0.25rem;
+}
+
+.registration-grid > * {
+  min-width: 0;
+}
+
+.registration-field,
+.registration-file {
+  min-width: 0;
+}
+
+.registration-file-name {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.registration-file input[type='file'] {
+  box-sizing: border-box;
+  min-height: 3rem;
+  max-width: 100%;
+  font-size: 1rem;
+}
+
+.registration-file input[type='file']::file-selector-button {
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.form-control,
+.form-control input {
+  min-width: 0;
+}
+
+.form-control input {
+  box-sizing: border-box;
+  min-height: 3rem;
+  font-size: 1rem;
+}
+
+.password-toggle {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.form-submit,
+.landing-action {
+  min-height: 2.75rem;
+}
+
+@media (min-width: 600px) {
+  .auth-page,
+  .landing-page {
+    align-items: center;
+  }
+
+  .auth-card {
+    max-width: 30rem;
+  }
+
+  .auth-card--wide {
+    max-width: 40rem;
+  }
+
+  .landing-card {
+    min-height: min(42rem, calc(100dvh - 3rem));
+  }
+}
+
+@media (min-width: 901px) {
+  .auth-card {
+    max-width: 27.5rem;
+  }
+
+  .auth-card--wide {
+    max-width: 45rem;
+  }
+
+  .registration-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .registration-grid .field-span {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 600px) and (max-width: 900px) {
+  .registration-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (min-width: 600px) and (max-height: 40rem) and (orientation: landscape) {
+  .auth-page,
+  .landing-page {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }

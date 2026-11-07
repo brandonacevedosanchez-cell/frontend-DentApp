@@ -18,7 +18,7 @@ function errorPassword(p) {
 }
 
 const claseBoton =
-  'w-full h-14 btn-gradient text-white font-bold rounded-lg ios-shadow active:scale-[0.98] transition-transform text-lg disabled:opacity-70 disabled:cursor-not-allowed'
+  'w-full h-14 btn-gradient text-white font-bold rounded-lg ios-shadow active:scale-[0.98] transition-[filter,transform] hover:brightness-110 text-lg disabled:opacity-70 disabled:cursor-not-allowed'
 
 // Paso 1: el usuario pide el código (POST /auth/forgot-password)
 // Paso 2: escribe el código + contraseña nueva (POST /auth/reset-password)
@@ -96,7 +96,7 @@ export default function RecuperarView() {
         </form>
       ) : (
         <form onSubmit={cambiarPassword} noValidate className="space-y-5">
-          <p className="text-slate-600 bg-green-50 border border-green-200 rounded-lg px-4 py-3 text-sm">
+          <p className="text-primary bg-primary/5 border border-primary/20 rounded-lg px-4 py-3 text-sm">
             Si el correo está registrado, recibirá un código de 6 dígitos. Vence en 10 minutos.
           </p>
           <Campo id="codigo" label="Código" inputMode="numeric" autoComplete="one-time-code" maxLength={6} placeholder="123456" value={codigo} onChange={(e) => setCodigo(e.target.value.replace(/\D/g, ''))} error={errores.codigo} />
